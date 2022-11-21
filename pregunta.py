@@ -59,7 +59,7 @@ def ingest_data():
     definir.dropna(axis=0, inplace=True)
     definir.reset_index(inplace=True)
     definir.drop(axis=1, labels='index', inplace=True)
-    definir.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.strip('%')
-    definir.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.replace(',','.').astype(float)
+    definir.porcentaje_de_palabras_clave = definir.porcentaje_de_palabras_clave.str.strip('%')
+    definir.porcentaje_de_palabras_clave = definir.porcentaje_de_palabras_clave.str.replace(',','.').astype(float)
 
-    return df
+    return definir
