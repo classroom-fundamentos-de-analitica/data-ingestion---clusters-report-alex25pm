@@ -16,7 +16,7 @@ def ingest_data():
     import re
     col_names = ['cluster', 'cantidad_de_palabras_clave', 'porcentaje_de_palabras_clave', 'principales_palabras_clave']
 
-    df = pd.read_fwf(
+    definir = pd.read_fwf(
         'clusters_report.txt', 
         names = col_names,
         widths=[8, 12, 12, 90],
@@ -26,7 +26,7 @@ def ingest_data():
     palabras = ""
     indice = -1
     reemplazo = False
-    for index, row in df.iterrows():
+    for index, row in definir.iterrows():
         if (index == 0 or not pd.isna(row['cluster'])):
             if(reemplazo == False):
                 indice = index
@@ -36,7 +36,7 @@ def ingest_data():
                 if(palabras[len(palabras)-1] == '.'):
                     palabras = palabras[:-1]
                 palabras = re.sub('\s{2,}', ' ', palabras)
-                df.iloc[indice, 3] = palabras
+                definir.iloc[indice, 3] = palabras
                 palabras = ""
                 indice = index
                 palabras += row['principales_palabras_clave']
@@ -49,17 +49,17 @@ def ingest_data():
                 if(palabras[len(palabras)-1] == '.'):
                     palabras = palabras[:-1]
                 palabras = re.sub('\s{2,}', ' ', palabras)
-                df.iloc[indice, 3] = palabras
+                definir.iloc[indice, 3] = palabras
                 palabras = "" 
             else:   
                 if palabras[len(palabras)-1] != " ":
                     palabras += " " 
                 palabras += row['principales_palabras_clave']
 
-    df.dropna(axis=0, inplace=True)
-    df.reset_index(inplace=True)
-    df.drop(axis=1, labels='index', inplace=True)
-    df.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.strip('%')
-    df.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.replace(',','.').astype(float)
+    definir.dropna(axis=0, inplace=True)
+    definir.reset_index(inplace=True)
+    definir.drop(axis=1, labels='index', inplace=True)
+    definir.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.strip('%')
+    definir.porcentaje_de_palabras_clave = df.porcentaje_de_palabras_clave.str.replace(',','.').astype(float)
 
     return df
